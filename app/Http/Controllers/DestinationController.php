@@ -7,7 +7,7 @@ use App\Models\Destination;
 
 class DestinationController extends Controller
 {
-    public function list()
+    public function getDestinations()
     {
         $data = Destination::all();
         return response()->json(['data' => $data]);

@@ -9,19 +9,14 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/create-user', [UserController::class, 'createUser']);
 
 Route::group([
     'middleware' => 'jwt.auth',], function ($router) {
-    Route::get('/destinations', [DestinationController::class, 'list']);
-    Route::post('/add_favorite', [UserController::class, 'store']);
-    Route::post('/create_user', [UserController::class, 'post']);
-    Route::get('/favorite/{id}', [UserController::class, 'get']);
+    Route::get('/get-destinations', [DestinationController::class, 'getDestinations']);
+    Route::post('/add-Destination', [UserController::class, 'addDestination']);
+    Route::get('/getFavorites', [UserController::class, 'getFavorites']);
 });
-
-
-
-
-
 
 Route::group([
     'middleware' => 'api',

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,10 +45,9 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
-
     public function destinations()
     {
-        return $this->belongsToMany(Destination::class, 'destination_user', 'destination_id', );
+        return $this->belongsToMany(Destination::class, 'destination_user');
     }
 
     public function getJWTIdentifier()

@@ -24,9 +24,9 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'email' => ['required'],
-            'password' => ['required']
+            'name' => ['required', 'string', 'max:30'],
+            'email' => ['required', 'string', 'email', 'unique:users'],
+            'password' => ['required', 'min:8']
         ];
     }
     public function failedValidation(Validator $validator)
@@ -42,7 +42,8 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'email.required' => 'Email is required',
-            'password.required' => 'Password is required'
+            'password.required' => 'Password is required',
+            'email.unique' => 'The user with the specified email address is already registered'
         ];
     }
 }

@@ -7,65 +7,34 @@ use App\Models\Destination;
 use App\Models\Destination_user;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateRequest;
+use App\Http\Requests\AddUserDestinationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function store(CreateRequest $request)
+    public function addDestination(AddUserDestinationRequest $request)
     {
         $user = Auth::user();
-        $id = $user->id;
-        $data = $request->all();
-        $count = DB::table('destination_user')->where('user_id', '=', $id)->count();
+        $data = $request->validated();
 
-        $favorites = DB::table('destination_user')->select('destination_id')->where('user_id', '=',  $id)->get();
+        $destination = Destination::find($data['destination_id']);
+        $user->destinations()->attach($destination);
 
-        $destinations = [];
-
-        foreach ($favorites as $favorite) {
-            $destination = DB::table('destination_user')->select('destination_id')->where('user_id', '=',  $id)->first();
-            if ($destination) {
-                $destinations[] = $destination->destination_id;
-            }
-        }
-
-        if($count < 3 && !in_array($data['destination_id'] ,$destinations)) {
-            Destination_user::create(['user_id' => $id, 'destination_id' => $data['destination_id']]);
-            return response()->json(['success']);
-        }
-        elseif (in_array($data['destination_id'] ,$destinations)){
-            return response()->json(['this place already exists']);
-        }
-
-        else {
-            return response()->json(['too many places']);
-        }
-
+        return response()->json(['success' => true]);
     }
-    public function post(CreateUserRequest $request)
+
+    public function createUser(CreateUserRequest $request)
     {
         $data = $request->all();
         return response()->json(['data' => User::create($data)]);
-
     }
 
-
-    public function get($id)
+    public function getFavorites()
     {
-        $favorites = DB::table('destination_user')->select('destination_id')->where('user_id', '=', $id)->get();
-
-        $destinations = [];
-
-        foreach ($favorites as $favorite) {
-            $destination = DB::table('destinations')->select('name')->where('id', '=', $favorite->destination_id)->first();
-            if ($destination) {
-                $destinations[] = $destination->name;
-            }
-        }
+        $user = Auth::user();
+        $destinations = $user->destinations()->get();
         return response()->json(['data' => $destinations]);
     }
-
 
 }
