@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "2ea39bbe-583a-4f8b-827f-e0611322fe3b",
+		"name": "holiday_Destination",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27276722"
+	},
+	"item": [
+		{
+			"name": "http://localhost:83/api/createuser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"misha\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:83/api/createuser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "83",
+					"path": [
+						"api",
+						"createuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:83/api/auth/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"sasha@mail\",\n    \"password\" : \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:83/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "83",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:83/api/get-destinations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"sasha\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:83/api/destinations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "83",
+					"path": [
+						"api",
+						"destinations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:83/api/add-Destination",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": 4,\n    \"destination_id\" : 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:83/api/add_favorite",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "83",
+					"path": [
+						"api",
+						"add_favorite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:83/api/getFavorites",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:83/api/favorite/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "83",
+					"path": [
+						"api",
+						"favorite",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

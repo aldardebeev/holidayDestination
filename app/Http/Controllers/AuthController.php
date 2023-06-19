@@ -5,8 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\JsonResponse;
 
+
+/**
+ * @OA\Tag(
+ *     name="Auth",
+ *     description="Authentication endpoints"
+ * )
+ */
+
 class AuthController extends Controller
 {
+
     /**
      * Create a new AuthController instance.
      *
@@ -18,9 +27,61 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/login",
+     *     tags={"Auth"},
+     *     summary="User login",
+     *     operationId="userLogin",
+     *     description="Authenticates a user and returns a JWT token",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="email",
+     *                 type="string",
+     *                 description="User email"
+     *             ),
+     *             @OA\Property(
+     *                 property="password",
+     *                 type="string",
+     *                 description="User password"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful login",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="access_token",
+     *                 type="string",
+     *                 description="JWT access token"
+     *             ),
+     *             @OA\Property(
+     *                 property="token_type",
+     *                 type="string",
+     *                 description="Token type (e.g., Bearer)"
+     *             ),
+     *             @OA\Property(
+     *                 property="expires_in",
+     *                 type="integer",
+     *                 description="Token expiration time in seconds"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *     ),
+     * )
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param  LoginUserRequest  $request
+     * @return JsonResponse
      */
     public function login()
     {
@@ -31,38 +92,6 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
-    }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
     }
 
     /**

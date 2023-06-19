@@ -2,7 +2,6 @@ version: '3'
 services:
   web:
     image: nginx
-    #из локального копирует в гостевую
     volumes:
       - ./.docker/conf/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - .:/var/www/html

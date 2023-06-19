@@ -21,13 +21,11 @@ class AddUserDestinationRequest extends FormRequest
 
             'destination_id' => [
                 'required',
-
+                'integer',
                 "exists:destinations,id",
-
                 Rule::unique('destination_user', 'destination_id')->where(function ($query) {
                     $query->where('user_id', $this->user()->id);
                 }),
-
                 function ($attribute, $value, $fail)  {
                     if ($this->user()->destinations()->count() >= 3) {
                         $fail('Пользователь достиг максимального количества избранных мест.');
